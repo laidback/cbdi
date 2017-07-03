@@ -1,0 +1,9 @@
+# skeleton test
+
+# Object definitions for this test page
+@objects
+  header id      header
+
+= Main section =
+    header:
+        text is "Yeah"
