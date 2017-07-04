@@ -28,6 +28,7 @@ trait UserServiceComponent {
 
 trait UserServiceComponentImpl extends UserServiceComponent {
   this: UserRepositoryComponent =>
+//  this: UserRepositoryComponent with HttpRemoteService =>
   override val userService: UserService = new UserServiceImpl
 
   private class UserServiceImpl extends UserService {
@@ -36,9 +37,12 @@ trait UserServiceComponentImpl extends UserServiceComponent {
   }
 }
 
-trait UserComponent extends UserServiceComponent with UserRepositoryComponent
+trait UserComponent extends UserServiceComponent 
+  with UserRepositoryComponent 
+//  with HttpRemoteServiceImpl
 
 trait UserComponentImpl extends UserComponent
   with UserServiceComponentImpl
   with UserRepositoryComponentImpl
+//  with HttpRemoteServiceImpl
 

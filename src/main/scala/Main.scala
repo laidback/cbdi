@@ -16,10 +16,14 @@ import scala.io.StdIn
 import scala.util.{Try, Success, Failure}
 import scala.concurrent.Future
 
-trait RemoteService {}
+trait RemoteService
 
 trait HttpRemoteService extends RemoteService {
-  implicit val httpClient: Flow[(HttpRequest, NotUsed), (Try[HttpResponse], NotUsed), _]
+  implicit val httpClient: Flow[(HttpRequest, NotUsed), (Try[HttpResponse], NotUsed), _] 
+}
+
+trait HttpRemoteServiceImpl extends HttpRemoteService {
+  implicit val httpClient: Flow[(HttpRequest, NotUsed), (Try[HttpResponse], NotUsed), _] 
 }
 
 trait TopComponent
@@ -45,10 +49,13 @@ object Main extends App
 
 
   /** Wire up your application calling your components directly */
-  val userComponent =  new UserServiceComponentImpl with UserRepositoryComponentImpl
+  val userComponent =  new UserServiceComponentImpl 
+                      with UserRepositoryComponentImpl
+//                      with HttpRemoteServiceImpl
   userComponent.userService.create("Lukas", "From Component")
 
-  val projectComponent = new ProjectServiceComponentImpl with ProjectRepositoryComponentImpl
+  val projectComponent = new ProjectServiceComponentImpl 
+                        with ProjectRepositoryComponentImpl
   projectComponent.projectService.create("MyProject", User("Lukas", "From Component"))
 
 
